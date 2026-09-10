@@ -1,0 +1,118 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --primary: #31583e;
+  --primary-foreground: #f7f3eb;
+  --radius: 1rem;
+  --background: #f7f3eb;
+  --foreground: #203226;
+  --card: #fbfaf6;
+  --card-foreground: #203226;
+  --popover: #fbfaf6;
+  --popover-foreground: #203226;
+  --secondary: #e9f0e8;
+  --secondary-foreground: #31583e;
+  --muted: #edf0ea;
+  --muted-foreground: #68766b;
+  --accent: #e7a47d;
+  --accent-foreground: #2d3e2e;
+  --destructive: #b9684d;
+  --destructive-foreground: #ffffff;
+  --border: #e2dfd6;
+  --input: #e2dfd6;
+  --ring: #6d9573;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button, a { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, a:focus-visible { outline: 3px solid rgba(109, 149, 115, 0.55); outline-offset: 3px; }
+
+.font-display { font-family: "DM Serif Display", Georgia, serif; }
+
+.section-kicker {
+  color: #b9684d;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.section-title {
+  color: #263d2d;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: clamp(2.6rem, 5vw, 4.3rem);
+  font-weight: 400;
+  letter-spacing: -0.065em;
+  line-height: 0.98;
+}
+
+.hero-shell { isolation: isolate; }
+
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-shell { animation: hero-in 700ms cubic-bezier(0.23, 1, 0.32, 1) both; }
+  @keyframes hero-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .animate-soft-pop { animation: soft-pop 420ms cubic-bezier(0.23, 1, 0.32, 1) both; }
+  .animate-soft-pulse { animation: soft-pulse 1.8s ease-in-out infinite; }
+  @keyframes soft-pop { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes soft-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(231, 164, 125, .14); } 50% { box-shadow: 0 0 0 8px rgba(231, 164, 125, 0); } }
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  button:not(:disabled), [role="button"]:not([aria-disabled="true"]), [type="button"]:not(:disabled), [type="submit"]:not(:disabled), a[href], select:not(:disabled) { @apply cursor-pointer; }
+}
+
+@layer components {
+  .container { width: 100%; margin-inline: auto; padding-inline: 1rem; }
+  .flex { min-height: 0; min-width: 0; }
+  @media (min-width: 640px) { .container { padding-inline: 1.5rem; } }
+  @media (min-width: 1024px) { .container { max-width: 1280px; padding-inline: 2rem; } }
+}
