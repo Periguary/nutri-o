@@ -1,0 +1,30 @@
+name: Organizar código-fonte
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract-source:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Extrair pacote-fonte em pastas
+        run: |
+          test -f nutriapoio-source.zip
+          unzip -o nutriapoio-source.zip -x 'node_modules/*' 'dist/*' '.git/*' '.manus-logs/*'
+          rm nutriapoio-source.zip
+      - name: Publicar estrutura organizada
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "Nenhuma alteração para publicar"; else git commit -m "Organiza código-fonte em pastas"; git push; fi
